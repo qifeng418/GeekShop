@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<title>Bootstrap Sign up Form with Icons</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<link href="styles/Login-style.css" rel="stylesheet">
+
+<script>
+	//form validation
+	/*
+		username: characters, length 8-20
+		email: 
+		password: characters, length 8-20
+	*/
+	
+	// username validation
+	function checkUsername(){
+		var username = $("#username").val();
+		var reg_username = /^\w{8,20}$/;
+		var reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var flag = reg_username.test(username) || reg_email.test(username);
+		if (flag) {
+			$("#username").css("border", "2px solid green");
+		} else {
+			$("#username").css("border", "1px solid red");
+		}
+		return flag;	
+	}
+	
+	// password validation
+	function checkPassword() {
+		var password = $("#password").val();
+		var reg_password = /^\w{8,20}$/;
+		var flag = reg_password.test(password);
+		if (flag) {
+			$("#password").css("border", "2px solid green");
+		} else {
+			$("#password").css("border", "1px solid red");
+		}
+		return flag;
+	}
+	
+	
+	$(function() {
+		// when submit, validate all inputs
+		$("#login-form").submit(function(){
+			// all inputs are validated
+			if (checkUsername() && checkPassword()) {
+				// AJAX
+				$.post("user/login", $(this).serialize(), function(data){
+					// login status returned
+					if (data.flag) {
+						// if login successfully
+						location.href = "index.html";
+					} else {
+						// if not, show user error message
+						$("#errorMsg").html(data.errorMsg);
+					}
+				});
+			}
+			return false;
+				
+		});
+		
+		// validate inputs at page
+		$("#username").blur(checkUsername);
+		$("#password").blur(checkPassword);
+		
+	});
+	
+</script>
+
+
+</head>
+<body>
+<div class="signup-form">
+    <form id="login-form" action="user/login" method="post">
+		<h2>Login</h2>
+		<p>Please fill in your name / email to login</p>
+		<div id = "errorMsg" style="float: center; color : red "></div>
+		
+		<hr>
+        <div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user"></i></span>
+				<input type="text" class="form-control" id = "username" name="username" placeholder="Username" required="required">
+			</div>
+        </div>
+       
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+				<input type="text" class="form-control" id = "password" name="password" placeholder="Password" required="required">
+			</div>
+        </div>
+
+        <div class="form-group">
+			<label class="checkbox-inline"><input type="checkbox">Remember this account</label>
+		</div>
+		<div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        </div>
+        
+    </form>
+	<div class="text-center">Don't have an account ? <a href="Register.html">Register here</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<title>GeekShop Sign up Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<link href="styles/Signup-style.css" rel="stylesheet">
+
+
+<script>
+	//form validation
+	/*
+		username: characters, length 8-20
+		email: 
+		password: characters, length 8-20
+	*/
+	
+	// username validation
+	function checkUsername(){
+		var username = $("#username").val();
+		var reg_username = /^\w{8,20}$/;
+		var flag = reg_username.test(username);
+		if (flag) {
+			$("#username").css("border", "2px solid green");
+		} else {
+			$("#username").css("border", "1px solid red");
+		}
+		return flag;	
+	}
+	
+	// email validation
+	function checkEmail() {
+		var email = $("#email").val();
+		var reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var flag = reg_email.test(email);
+		if (flag) {
+			$("#email").css("border", "");
+		} else {
+			$("#email").css("border", "1px solid red");
+		}
+		return flag;
+	}
+	
+	// password validation
+	function checkPassword() {
+		var password = $("#password").val();
+		var reg_password = /^\w{8,20}$/;
+		var flag = reg_password.test(password);
+		if (flag) {
+			$("#password").css("border", "2px solid green");
+		} else {
+			$("#password").css("border", "1px solid red");
+		}
+		return flag;
+	}
+	
+	// confirm password
+	function confirmPwd() {
+		var password = $("#password").val()
+		var confirm_password =	$("#confirm_password").val()
+		var flag = password == confirm_password;
+		if (flag) {
+			$("#confirm_password").css("border", "2px solid green");
+		} else {
+			$("#confirm_password").css("border", "1px solid red");
+		}
+		return flag;
+	}
+	
+	
+	$(function() {
+		// when submit, validate all inputs
+		$("#register-form").submit(function(){
+			// all inputs are validated
+			if (checkUsername() && checkEmail() && checkPassword() && confirmPwd()) {
+				// AJAX
+				$.post("user/register", $(this).serialize(), function(data){
+					// register status returned
+					if (data.flag) {
+						// if register successfully
+						location.href = "index.html";
+					} else {
+						// if not, show user error message
+						$("#errorMsg").html(data.errorMsg);
+					}
+				});
+			}
+			return false;
+				
+		});
+		
+		// validate inputs at page
+		$("#username").blur(checkUsername);
+		$("#email").blur(checkEmail);
+		$("#password").blur(checkPassword);
+		$("#confirm_password").blur(confirmPwd);
+		
+	});
+	
+</script>
+
+
+</head>
+<body>
+<div class="signup-form">
+    <form id="register-form" action="user/register" method="post">
+		<h2>Sign Up</h2>
+		<p>Please fill in this form to create an account!</p>
+		<hr>
+        <div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user"></i></span>
+				<input type="text" class="form-control" id = "username" name="username" placeholder="Username" required="required">
+			</div>
+        </div>
+        <div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+				<input type="text" class="form-control" id = "email" name="email" placeholder="Email Address" required="required">
+			</div>
+        </div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+				<input type="text" class="form-control" id = "password" name="password" placeholder="Password" required="required">
+			</div>
+        </div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-lock"></i>
+					<i class="fa fa-check"></i>
+				</span>
+				<input type="text" class="form-control" id = "confirm_password" name="confirm_password" placeholder="Confirm Password" required="required">
+			</div>
+        </div>
+        <div class="form-group">
+			<label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
+		</div>
+		<div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+            <div id = "errorMsg" style="float: right; color : red "></div>
+        </div>
+        
+    </form>
+	<div class="text-center">Already have an account? <a href="Login.html">Login here</a></div>
+</div>
+</body>
+</html>
