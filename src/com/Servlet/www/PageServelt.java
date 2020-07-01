@@ -30,7 +30,6 @@ public class PageServelt extends BaseServlet {
 		if (cidStr != null && cidStr.length() > 0) {
 			cid = Integer.parseInt(cidStr);
 		}
-		System.out.println("str" + currentPageStr);
 		if (currentPageStr != null && currentPageStr.length() > 0) {
 			currentPage = Integer.parseInt(currentPageStr);
 		} else  {
@@ -43,11 +42,7 @@ public class PageServelt extends BaseServlet {
 			pageSize = 15;
 		}
 		
-		System.out.println(cid);
-		System.out.println(currentPage);
-		System.out.println(pageSize);
 		
-	
 		// get PageBean object from PageService
 		PageService pageService = new PageServiceImpl();
 		PageBean<Product> pb = pageService.pageQuery(cid, currentPage, pageSize);

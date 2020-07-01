@@ -29,30 +29,35 @@
 	});
 	
 	function load(cid, currentPage) {
-		// Ajax
+		
 		$.get("page/pageQuery", {cid:cid, currentPage : currentPage}, function(pb) {
 			// get data in PageBean
 			
-			// page number
+			// total page number
 			$("#totalCount").html(pb.totalCount);
 			
-			var lis = "";
-			var before = pb.currentPage - 1; 	// next page
+			// next page
+			var before = pb.currentPage - 1;
 			if (before <= 0) {
 				before = 1;
 			}
-			var after = pb.currentPage;	// previous page
-			if (after < pb.totalPage) {
-				after += 1;
-			}
-			
 			var before_li = '<div onclick="javascript:load('+ cid +', '+ before +')" class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>';
 			$("#before").html(before_li);
 			
+			// previous page
+			var after = pb.currentPage;	
+			if (after < pb.totalPage) {
+				after += 1;
+			}
+			var after_li = '<div onclick="javascript:load('+ cid +', '+ after +')" class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>';
+			$("#after").html(after_li);
+			
+			// page number
+			var lis = "";
 			for (var i=1; i<=pb.totalPage; i++) {
 				var li;
-				// highlight current page
 				if (pb.currentPage == i) {
+					// highlight current page
 					li = '<li style="color:red" onclick="javascript:load('+ cid +', '+ i +')"><a href="javascript:void">'+ i +'</a></li>'; 
 				} else {
 					li = '<li onclick="javascript:load('+ cid +', '+ i +')"><a href="javascript:void(0)">'+ i +'</a></li>';
@@ -61,15 +66,12 @@
 			}
 			$("#pageNum").html(lis);
 			
-			var after_li = '<div onclick="javascript:load('+ cid +', '+ after +')" class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>';
-			$("#after").html(after_li);
 			
-			// data
+			// product list data
 			var product_lis = '';
-			
 			for (var i=0; i<pb.list.length; i++) {
 				var product = pb.list[i];
-				
+				// for every product
 				var li = '<div class="product_item discount">' +
 					'<div class="product_border"></div>' +
 					'<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="'+ product.image +'" alt=""></div>' +
@@ -85,20 +87,18 @@
 				
 				product_lis += li;
 			}
-			
 			$("#product").html(product_lis);
+			
+			window.scrollTo(0,600);
+			
+			//
 			
 		});
 	}
 	
 </script>
 
-<style>
-.divcss{ border:0px solid #F00; width:300px; height:500px} 
-</style>
-
 </head>
-
 
 
 <body>
@@ -242,29 +242,23 @@
 							-->
 							
 						</div>
-						
-
-						<!-- Shop Page Navigation -->
-						<div class = "divcss"></div>
-						<div class="shop_page_nav d-flex flex-row">
-							<div id = "before"></div>
-							<ul id = "pageNum" class="page_nav d-flex flex-row">
-							<!-- 
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">...</a></li>
-								<li><a href="#">21</a></li>
-							 -->
-							</ul>
-							<div id = "after"></div>
-						</div>
-
 					</div>
-
 				</div>
 			</div>
 		</div>
+
+			
+			<!-- Shop Page Navigation -->
+			<div style = "float:right; margin-right:100px;" class="d-flex flex-row">
+				<div id="before"></div>
+				<ul id="pageNum" class="page_nav d-flex flex-row">
+					<!-- 
+						<li><a href="#">1</a></li>
+					-->
+				</ul>
+				<div id="after"></div>
+			</div>
+
 	</div>
 
 	<!-- Recently Viewed -->
@@ -382,6 +376,9 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
 	</div>
 
 	<!-- Brands -->
