@@ -14,7 +14,7 @@
 <img src="screenshots/image5.png" height="280" width="900" />
 
 ## User Cart
-<img src="screenshots/image6.png" height="280" width="900" />
+<img src="screenshots/image6.png" height="450" width="900" />
 
 ## User Payment
 
