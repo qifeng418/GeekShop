@@ -18,6 +18,6 @@
 
 ### User Payment
 
-(to be added ..)
+(to be added ...)
 
 
