@@ -73,6 +73,7 @@ public class BaseServlet extends HttpServlet {
 	 * @throws JsonProcessingException 
 	 */
 	public String writeValueAsString(Object obj) throws JsonProcessingException {
+		// use ObjectMapper to serialize object back to client 
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(obj);
 	}
