@@ -94,6 +94,23 @@
 			//
 			
 		});
+		
+		// Ajax gets back a list of category
+		$.get("category/findAll", {}, function(data) {
+			// data is a list [{category_id : 1, category : Computers & Laptops}, {}, {}]
+			var lis1 = '';
+			var lis2 = '';
+			for (var i=0; i<data.length; i++) {
+				var li1 = '<li><a href="shop.html?cid='+ data[i].category_id +'">'+ data[i].category +'</a></li>';
+				//var li2 = '<li class="page_menu_item"><a href="'+ data[i].link +'">'+ data[i].menu +'<i class="fa fa-angle-down"></i></a></li>'
+				lis1 += li1;
+				//lis2 += li2;
+			}
+			
+			$("#category2").html(lis1);
+			//$("#menu2").html(lis2);
+			
+		});
 	}
 	
 </script>
@@ -130,7 +147,9 @@
 					<div class="shop_sidebar">
 						<div class="sidebar_section">
 							<div class="sidebar_title">Categories</div>
-							<ul class="sidebar_categories">
+							<ul id= "category2" class="sidebar_categories">
+							
+							<!--  
 								<li><a href="#">Computers & Laptops</a></li>
 								<li><a href="#">Cameras & Photos</a></li>
 								<li><a href="#">Hardware</a></li>
@@ -140,6 +159,8 @@
 								<li><a href="#">Car Electronics</a></li>
 								<li><a href="#">Video Games & Consoles</a></li>
 								<li><a href="#">Accessories</a></li>
+							-->
+							
 							</ul>
 						</div>
 						<div class="sidebar_section filter_by_section">
