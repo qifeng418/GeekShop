@@ -6,15 +6,16 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
  
 /**
- * @Auther: liangbl
- * @Date: 2018/12/21 10:53
+ * @Auther: xx
+ * @Date: xx
  * @Description:
+ * @apiNote: the User email registration functionality is still under developing (need authentication)
  */
 public class MailUtils {
     // 邮箱用户名
-    public static String userName="418020360@qq.com";
+    public static String userName="xx";	// use QQ account for testing
     // 邮箱授权码(非邮箱登录密码)
-    public static String password="xiadaHUANGqf.";
+    public static String password="xx";
  
     /**
      * 发送邮件
